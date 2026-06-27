@@ -1,0 +1,88 @@
+/* ============================================================
+   variables.css — Tokens de design (cores, espaços, sombras)
+   Para customizar a aparência, edite aqui.
+============================================================ */
+
+:root {
+  /* ── Cores principais ───────────────────────── */
+  --indigo-50:  #EEF2FF;
+  --indigo-100: #E0E7FF;
+  --indigo-200: #C7D2FE;
+  --indigo-400: #818CF8;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;
+  --indigo-700: #4338CA;
+  --indigo-900: #312E81;
+
+  --green-100:  #D1FAE5;
+  --green-500:  #10B981;
+  --green-600:  #059669;
+  --green-700:  #047857;
+
+  --amber-100:  #FEF3C7;
+  --amber-500:  #F59E0B;
+  --amber-600:  #D97706;
+
+  --red-100:    #FEE2E2;
+  --red-500:    #EF4444;
+
+  /* ── Paleta Light ───────────────────────────── */
+  --bg-primary:    #FFFFFF;
+  --bg-secondary:  #F8FAFC;
+  --bg-tertiary:   #F1F5F9;
+  --bg-hover:      #E2E8F0;
+
+  --border-light:  #E2E8F0;
+  --border-medium: #CBD5E1;
+
+  --text-primary:  #0F172A;
+  --text-secondary:#475569;
+  --text-muted:    #94A3B8;
+  --text-inverse:  #FFFFFF;
+
+  /* ── Acento principal (índigo) ──────────────── */
+  --accent:        var(--indigo-600);
+  --accent-light:  var(--indigo-50);
+  --accent-hover:  var(--indigo-700);
+
+  /* ── Sucesso (verde) ────────────────────────── */
+  --success:       var(--green-500);
+  --success-light: var(--green-100);
+  --success-dark:  var(--green-700);
+
+  /* ── Sidebar ────────────────────────────────── */
+  --sidebar-bg:    #0F172A;
+  --sidebar-text:  #CBD5E1;
+  --sidebar-muted: #64748B;
+  --sidebar-hover: #1E293B;
+  --sidebar-active:#1E293B;
+  --sidebar-border:#1E293B;
+  --sidebar-width: 300px;
+
+  /* ── Topbar ─────────────────────────────────── */
+  --topbar-bg:     #FFFFFF;
+  --topbar-border: var(--border-light);
+  --topbar-height: 56px;
+
+  /* ── Foco ───────────────────────────────────── */
+  --focus-bg:      rgba(15, 23, 42, 0.97);
+  --focus-accent:  #818CF8;
+  --focus-success: #34D399;
+
+  /* ── Sombras ────────────────────────────────── */
+  --shadow-sm:  0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow-md:  0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  --shadow-xl:  0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+
+  /* ── Raios de borda ─────────────────────────── */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-full:9999px;
+
+  /* ── Transições ─────────────────────────────── */
+  --transition: 0.2s ease;
+  --transition-slow: 0.35s ease;
+}

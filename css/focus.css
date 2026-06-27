@@ -1,0 +1,253 @@
+/* ============================================================
+   focus.css — Barra de Foco no topo da tela
+============================================================ */
+
+/* ── Barra principal ─────────────────────────────────────── */
+.focus-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  background: #0F172A;
+  border-bottom: 2px solid #4F46E5;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.focus-bar.distracted {
+  border-bottom-color: #EF4444;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ── Barra de progresso de tempo (fundo) ────────────────── */
+.focus-bar-progress {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: rgba(99, 102, 241, 0.12);
+  width: 100%;
+  transform-origin: left;
+  transition: transform 1s linear;
+  pointer-events: none;
+}
+
+/* ── Conteúdo da barra ───────────────────────────────────── */
+.focus-bar-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 52px;
+  gap: 16px;
+}
+
+/* ── Esquerda ────────────────────────────────────────────── */
+.focus-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.focus-bar-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #818CF8;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.focus-bar.distracted .focus-bar-badge {
+  color: #FCA5A5;
+}
+
+.focus-bar-lesson {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+/* ── Centro (cronômetro) ─────────────────────────────────── */
+.focus-bar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.focus-bar-timer {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.04em;
+  min-width: 72px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.focus-bar.distracted .focus-bar-timer {
+  color: #FCA5A5;
+  animation: timer-flash 0.5s ease 3;
+}
+
+@keyframes timer-flash {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.focus-bar-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.focus-bar-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+.focus-bar-btn.secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+}
+
+.focus-bar-btn.secondary:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+.focus-bar-presets {
+  display: flex;
+  gap: 4px;
+}
+
+.focus-preset-btn {
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s ease;
+}
+
+.focus-preset-btn:hover,
+.focus-preset-btn.active {
+  background: #4F46E5;
+  color: #fff;
+  border-color: #4F46E5;
+}
+
+/* ── Direita ─────────────────────────────────────────────── */
+.focus-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.focus-distraction-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+}
+
+.focus-distraction-count svg {
+  opacity: 0.5;
+}
+
+.focus-bar.distracted .focus-distraction-count {
+  color: #FCA5A5;
+}
+
+.focus-bar.distracted .focus-distraction-count svg {
+  opacity: 1;
+  stroke: #FCA5A5;
+}
+
+.focus-bar-exit {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.25);
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.focus-bar-exit:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.07);
+}
+
+/* ── Aviso de distração ──────────────────────────────────── */
+.focus-bar-warning {
+  background: rgba(239, 68, 68, 0.15);
+  border-top: 1px solid rgba(239, 68, 68, 0.3);
+  color: #FCA5A5;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px;
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ── Quando a barra está ativa, empurra o conteúdo ──────── */
+body.focus-active .player-screen,
+body.focus-active .home-screen {
+  padding-top: 52px;
+}
+
+body.focus-active.focus-warning-visible .player-screen,
+body.focus-active.focus-warning-visible .home-screen {
+  padding-top: 88px;
+}
+
+/* ── Botão de foco na topbar — estado ativo ─────────────── */
+.btn-focus-mode.active {
+  background: #4F46E5;
+  color: #fff;
+}
+
+/* ── Responsivo ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .focus-bar-lesson { display: none; }
+  .focus-bar-presets { display: none; }
+  .focus-bar-content { padding: 0 12px; }
+}
+
+@media (max-width: 480px) {
+  .focus-distraction-count { display: none; }
+}

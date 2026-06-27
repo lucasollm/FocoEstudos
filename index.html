@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusLearn — Plataforma de Estudos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/player.css" />
+  <link rel="stylesheet" href="css/focus.css" />
+  <link rel="stylesheet" href="css/modals.css" />
+  <link rel="stylesheet" href="css/xp.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       TELA INICIAL (Home)
+  ============================================================ -->
+  <div id="home-screen" class="home-screen">
+    <header class="home-header">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">FocusLearn</span>
+      </div>
+      <nav class="home-nav">
+        <a href="#cursos-section">Cursos</a>
+        <a href="#sobre-section">Sobre</a>
+        <button class="btn-nav-cta" onclick="scrollToSection('cursos-section')">Começar Agora</button>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-badge">🎯 Plataforma com Modo Foco Intenso</div>
+      <h1 class="hero-title">Aprenda de verdade.<br /><span class="hero-accent">Sem distrações.</span></h1>
+      <p class="hero-subtitle">Uma plataforma desenhada para quem tem dificuldade de manter o foco. Aulas organizadas, progresso visual e um modo que bloqueia a tela até você terminar.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToSection('cursos-section')">Ver Cursos</button>
+        <button class="btn-ghost" onclick="openDemo()">Como funciona?</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" id="stat-cursos">0</span><span class="stat-label">Cursos</span></div>
+        <div class="stat"><span class="stat-num" id="stat-aulas">0</span><span class="stat-label">Aulas</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Gratuito</span></div>
+      </div>
+    </section>
+
+    <section class="features-strip">
+      <div class="feature-item">
+        <span class="feature-icon">🔒</span>
+        <span>Modo Foco com bloqueio de tela</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✅</span>
+        <span>Marque aulas como concluídas</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📊</span>
+        <span>Progresso visual em tempo real</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">⏱️</span>
+        <span>Cronômetro Pomodoro integrado</span>
+      </div>
+    </section>
+
+    <!-- CURSOS -->
+    <section class="courses-section" id="cursos-section">
+      <div class="section-header">
+        <h2 class="section-title">Cursos Disponíveis</h2>
+        <p class="section-sub">Escolha um curso para começar. Você pode retomar de onde parou a qualquer momento.</p>
+        <button class="btn-import-playlist" onclick="openModal('modal-import')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Importar Playlist do YouTube
+        </button>
+      </div>
+      <div class="courses-grid" id="courses-grid">
+        <!-- Preenchido pelo JS -->
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="about-section" id="sobre-section">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Feito para quem se distrai fácil</h2>
+          <p>O FocusLearn nasceu de um problema real: a dificuldade de assistir uma aula até o fim sem cair em outra aba. Aqui você tem ferramentas reais para combater isso.</p>
+          <ul class="about-list">
+            <li>🔒 <strong>Modo Foco Intenso</strong> — bloqueia a tela com cronômetro obrigatório</li>
+            <li>🔔 <strong>Alerta de aba</strong> — avisa quando você tenta sair</li>
+            <li>✅ <strong>Check de progresso</strong> — veja exatamente onde parou</li>
+            <li>🎯 <strong>Metas de sessão</strong> — defina quantas aulas quer fazer hoje</li>
+          </ul>
+        </div>
+        <div class="about-visual">
+          <div class="focus-preview">
+            <div class="fp-screen">
+              <div class="fp-timer">25:00</div>
+              <div class="fp-label">Modo Foco Ativo</div>
+              <div class="fp-bar"><div class="fp-bar-fill"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="home-footer">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">FocusLearn</span>
+      </div>
+      <p>Feito com foco. Para quem precisa de foco.</p>
+    </footer>
+  </div>
+
+  <!-- ============================================================
+       PLAYER / TELA DA AULA
+  ============================================================ -->
+  <div id="player-screen" class="player-screen hidden">
+
+    <!-- SIDEBAR ESQUERDA -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button class="btn-home" onclick="goHome()" title="Voltar para cursos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </button>
+        <div class="sidebar-course-title" id="sidebar-course-title">Carregando...</div>
+        <button class="btn-sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Recolher menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+        </button>
+      </div>
+
+      <!-- Progresso geral -->
+      <div class="sidebar-progress">
+        <div class="sp-label">
+          <span>Progresso geral</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="sp-bar">
+          <div class="sp-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        <div class="sp-count" id="progress-count">0 de 0 aulas concluídas</div>
+      </div>
+
+      <!-- Lista de módulos e aulas -->
+      <div class="sidebar-list" id="sidebar-list">
+        <!-- Preenchido pelo JS -->
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="player-main" id="player-main">
+
+      <!-- TOPBAR -->
+      <div class="player-topbar">
+        <div class="topbar-left">
+          <span class="topbar-breadcrumb" id="topbar-breadcrumb">Cursos</span>
+        </div>
+        <div class="topbar-right">
+          <!-- Meta do dia (aparece só se tiver meta ativa) -->
+          <div id="goal-display" class="goal-display hidden"></div>
+          <!-- Barra de XP -->
+          <div id="xp-bar-container" class="xp-bar-container" onclick="openRankModal()" title="Ver ranking"></div>
+          <button class="btn-focus-mode" id="btn-focus-mode" onclick="toggleFocusMode()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            Modo Foco
+          </button>
+          <div class="topbar-logo" onclick="goHome()">
+            <span>⚡</span> FocusLearn
+          </div>
+        </div>
+      </div>
+
+      <!-- TÍTULO DA AULA -->
+      <div class="lesson-header">
+        <div class="lesson-meta">
+          <span class="lesson-module-tag" id="lesson-module-tag">Módulo</span>
+          <span class="lesson-order" id="lesson-order">#1</span>
+        </div>
+        <h1 class="lesson-title" id="lesson-title">Título da Aula</h1>
+      </div>
+
+      <!-- PLAYER DE VÍDEO -->
+      <div class="video-wrapper">
+        <div class="video-container" id="video-container">
+          <!-- YouTube IFrame API renderiza aqui -->
+          <div id="youtube-player"></div>
+          <div class="video-placeholder" id="video-placeholder">
+            <div class="vp-icon">▶</div>
+            <p>Selecione uma aula para começar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AÇÕES ABAIXO DO VÍDEO -->
+      <div class="lesson-actions">
+        <div class="lesson-nav">
+          <button class="btn-nav" id="btn-prev" onclick="navigateLesson(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+            Anterior
+          </button>
+          <button class="btn-complete" id="btn-complete" onclick="toggleComplete()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            Marcar como Concluída
+          </button>
+          <button class="btn-nav" id="btn-next" onclick="navigateLesson(1)">
+            Próxima
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- DESCRIÇÃO -->
+      <div class="lesson-description">
+        <h3>Descrição</h3>
+        <p id="lesson-description-text">Selecione uma aula para ver a descrição.</p>
+      </div>
+
+      <!-- NOTAS PESSOAIS -->
+      <div class="lesson-notes">
+        <h3>Minhas Anotações <span class="notes-badge">privado</span></h3>
+        <textarea id="lesson-notes-input" placeholder="Digite suas anotações sobre esta aula..."></textarea>
+        <button class="btn-save-notes" onclick="saveNotes()">Salvar Anotação</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================
+       MODO FOCO — BARRA NO TOPO
+  ============================================================ -->
+  <div id="focus-bar" class="focus-bar hidden">
+
+    <!-- Barra de progresso do tempo (fundo) -->
+    <div class="focus-bar-progress" id="focus-bar-progress"></div>
+
+    <div class="focus-bar-content">
+
+      <!-- Esquerda: badge + nome da aula -->
+      <div class="focus-bar-left">
+        <span class="focus-bar-badge" id="focus-bar-badge">🎯 FOCO</span>
+        <span class="focus-bar-lesson" id="focus-bar-lesson">Aula atual</span>
+      </div>
+
+      <!-- Centro: cronômetro + controles -->
+      <div class="focus-bar-center">
+        <button class="focus-bar-btn" id="btn-focus-play" onclick="toggleFocusTimer()" title="Iniciar/Pausar">
+          <svg id="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          <svg id="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <span class="focus-bar-timer" id="focus-timer-display">25:00</span>
+        <button class="focus-bar-btn secondary" onclick="resetFocusTimer()" title="Reiniciar">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 .49-3.86"/></svg>
+        </button>
+        <div class="focus-bar-presets">
+          <button class="focus-preset-btn active" onclick="setFocusTime(25)">25m</button>
+          <button class="focus-preset-btn" onclick="setFocusTime(45)">45m</button>
+          <button class="focus-preset-btn" onclick="setFocusTime(60)">60m</button>
+        </div>
+      </div>
+
+      <!-- Direita: distrações + sair -->
+      <div class="focus-bar-right">
+        <div class="focus-distraction-count" id="focus-distraction-count" title="Vezes que você saiu da aba">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span id="distraction-num">0</span> distração<span id="distraction-plural"></span>
+        </div>
+        <button class="focus-bar-exit" onclick="exitFocusMode()">✕ Sair do foco</button>
+      </div>
+
+    </div>
+
+    <!-- Aviso de distração (aparece por alguns segundos) -->
+    <div class="focus-bar-warning hidden" id="focus-bar-warning">
+      😬 Você saiu da aba! Volta pro foco.
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       MODAL — PARABÉNS (aula concluída)
+  ============================================================ -->
+  <div id="modal-complete" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-emoji">🎉</div>
+      <h2>Aula Concluída!</h2>
+      <p id="modal-complete-msg">Ótimo trabalho! Continue assim.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-secondary" onclick="closeModal('modal-complete')">Ficar nesta aula</button>
+        <button class="btn-modal-primary" onclick="goNextFromModal()">Próxima Aula →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL — CURSO COMPLETO -->
+  <div id="modal-course-done" class="modal-overlay hidden">
+    <div class="modal-box modal-celebrate">
+      <div class="modal-emoji">🏆</div>
+      <h2>Curso Completo!</h2>
+      <p>Você finalizou todas as aulas deste curso. Incrível!</p>
+      <button class="btn-modal-primary" onclick="goHome(); closeModal('modal-course-done')">Ver outros cursos</button>
+    </div>
+  </div>
+
+  <!-- MODAL — DEMO / COMO FUNCIONA -->
+  <div id="modal-demo" class="modal-overlay hidden">
+    <div class="modal-box modal-demo">
+      <button class="modal-close" onclick="closeModal('modal-demo')">✕</button>
+      <h2>Como funciona o FocusLearn?</h2>
+      <div class="demo-steps">
+        <div class="demo-step">
+          <div class="ds-num">1</div>
+          <div class="ds-text">
+            <strong>Escolha um curso</strong>
+            <p>Navegue pelos cursos disponíveis e clique para começar.</p>
+          </div>
+        </div>
+        <div class="demo-step">
+          <div class="ds-num">2</div>
+          <div class="ds-text">
+            <strong>Assista as aulas</strong>
+            <p>O vídeo fica no centro. A lista de aulas fica na lateral esquerda.</p>
+          </div>
+        </div>
+        <div class="demo-step">
+          <div class="ds-num">3</div>
+          <div class="ds-text">
+            <strong>Ative o Modo Foco</strong>
+            <p>Clique em "Modo Foco" para bloquear a tela com cronômetro. Você não conseguirá navegar até o tempo acabar.</p>
+          </div>
+        </div>
+        <div class="demo-step">
+          <div class="ds-num">4</div>
+          <div class="ds-text">
+            <strong>Marque como concluída</strong>
+            <p>Ao terminar cada aula, marque como concluída — tanto na lateral quanto abaixo do vídeo.</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn-modal-primary" onclick="closeModal('modal-demo'); scrollToSection('cursos-section')">Entendido! Ver Cursos →</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — IMPORTAR PLAYLIST DO YOUTUBE
+  ============================================================ -->
+  <div id="modal-import" class="modal-overlay hidden">
+    <div class="modal-box modal-import">
+      <button class="modal-close" onclick="closeModal('modal-import')">✕</button>
+
+      <!-- ETAPA 1: colar link -->
+      <div id="import-step-1" class="import-step">
+        <div class="modal-emoji">📥</div>
+        <h2>Importar Playlist do YouTube</h2>
+        <p>Cole o link de qualquer playlist pública do YouTube e a plataforma monta o curso automaticamente.</p>
+
+        <div class="import-input-wrap">
+          <input
+            type="text"
+            id="import-url-input"
+            class="import-url-input"
+            placeholder="https://youtube.com/playlist?list=PL..."
+            onkeydown="if(event.key==='Enter') fetchPlaylist()"
+          />
+          <button class="btn-import-fetch" id="btn-fetch" onclick="fetchPlaylist()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Buscar
+          </button>
+        </div>
+        <div class="import-error hidden" id="import-error"></div>
+
+        <div class="import-loading hidden" id="import-loading">
+          <div class="import-spinner"></div>
+          <span id="import-loading-msg">Buscando vídeos da playlist...</span>
+        </div>
+      </div>
+
+      <!-- ETAPA 2: revisar e ajustar -->
+      <div id="import-step-2" class="import-step hidden">
+        <div class="import-preview-header">
+          <button class="import-back-btn" onclick="importGoBack()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+            Voltar
+          </button>
+          <h2>Revisar Curso</h2>
+        </div>
+
+        <!-- Info do curso -->
+        <div class="import-course-info">
+          <div class="import-field">
+            <label>Nome do curso</label>
+            <input type="text" id="import-course-title" class="import-field-input" />
+          </div>
+          <div class="import-field-row">
+            <div class="import-field">
+              <label>Ícone</label>
+              <input type="text" id="import-course-icon" class="import-field-input small" maxlength="2" />
+            </div>
+            <div class="import-field">
+              <label>Categoria</label>
+              <input type="text" id="import-course-tag" class="import-field-input" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de vídeos importados -->
+        <div class="import-videos-label">
+          <span id="import-videos-count">0 vídeos encontrados</span>
+          <span class="import-hint">Você pode editar títulos clicando neles</span>
+        </div>
+        <div class="import-videos-list" id="import-videos-list">
+          <!-- Preenchido pelo JS -->
+        </div>
+
+        <div class="import-actions">
+          <button class="btn-modal-secondary" onclick="closeModal('modal-import')">Cancelar</button>
+          <button class="btn-modal-primary" onclick="confirmImport()">
+            ✅ Criar Curso
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL — CONFIGURAR MODO FOCO -->
+  <div id="modal-focus-setup" class="modal-overlay hidden">
+    <div class="modal-box modal-focus-setup">
+      <button class="modal-close" onclick="closeModal('modal-focus-setup')">✕</button>
+      <div class="modal-emoji">🎯</div>
+      <h2>Ativar Modo Foco</h2>
+
+      <div class="focus-setup-name-wrap">
+        <label>Seu nome (para o ranking)</label>
+        <input type="text" id="focus-setup-name" class="import-field-input" placeholder="Como te chamamos?" maxlength="20" />
+      </div>
+
+      <div class="focus-setup-modes">
+        <label class="focus-mode-option">
+          <input type="radio" name="focus-mode" value="pomodoro" checked />
+          <div class="focus-mode-card">
+            <div class="fmc-icon">⏱️</div>
+            <div class="fmc-info">
+              <strong>Pomodoro</strong>
+              <p>Timer de foco + descanso de <span id="focus-setup-break">5</span> min ao terminar</p>
+            </div>
+          </div>
+        </label>
+        <label class="focus-mode-option">
+          <input type="radio" name="focus-mode" value="goal" />
+          <div class="focus-mode-card">
+            <div class="fmc-icon">🎯</div>
+            <div class="fmc-info">
+              <strong>Meta de Aulas</strong>
+              <p>Defina quantas aulas quer concluir hoje</p>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div class="focus-goal-row" id="focus-goal-row" style="display:none">
+        <label>Quantas aulas hoje?</label>
+        <div class="goal-picker">
+          <button onclick="adjustGoal(-1)">−</button>
+          <input type="number" id="focus-goal-input" value="3" min="1" max="20" />
+          <button onclick="adjustGoal(1)">+</button>
+        </div>
+      </div>
+
+      <button class="btn-modal-primary" style="width:100%;margin-top:8px" onclick="confirmFocusSetup()">
+        Iniciar Foco 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL — SUBIU DE PATENTE -->
+  <div id="modal-rankup" class="modal-overlay hidden">
+    <div class="modal-box modal-rankup">
+      <div class="rankup-glow"></div>
+      <div class="modal-emoji" style="font-size:4rem">🎖️</div>
+      <h2>Nova Patente!</h2>
+      <div class="rankup-name" id="rankup-rank-name">⚡ Concentrado</div>
+      <p>Você desbloqueou novos benefícios:</p>
+      <div class="rankup-perks">
+        <div class="rankup-perk-item">⏰ <strong><span id="rankup-break">10</span> min</strong> de descanso no Pomodoro</div>
+        <div class="rankup-perk-item">⚡ Multiplicador de XP <strong><span id="rankup-mult">1.2x</span></strong></div>
+        <div class="rankup-perk-item">🎨 Visual exclusivo desta patente</div>
+      </div>
+      <button class="btn-modal-primary" style="width:100%" onclick="closeModal('modal-rankup')">
+        Incrível! Continuar estudando 💪
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL — META DIÁRIA BATIDA -->
+  <div id="modal-goal-done" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-emoji">🎯</div>
+      <h2>Meta Batida!</h2>
+      <p>Você completou todas as aulas da sua meta de hoje. +20 XP!</p>
+      <div class="modal-actions">
+        <button class="btn-modal-secondary" onclick="closeModal('modal-goal-done')">Continuar estudando</button>
+        <button class="btn-modal-primary" onclick="closeModal('modal-goal-done'); exitFocusMode()">Encerrar sessão</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL — RANKING -->
+  <div id="modal-rank" class="modal-overlay hidden">
+    <div class="modal-box modal-rank">
+      <button class="modal-close" onclick="closeModal('modal-rank')">✕</button>
+      <div class="modal-emoji">🏆</div>
+      <h2>Ranking Local</h2>
+      <p style="text-align:center;margin-bottom:20px">Suas melhores sessões de estudo</p>
+      <div id="rank-list" class="rank-list"></div>
+      <div class="rank-current-xp">
+        Seu XP atual: <strong id="rank-current-val">0</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST de notificação -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/xp.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/focus.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/import.js"></script>
+  <script>
+    // Liga radio buttons do setup de foco
+    document.querySelectorAll('input[name="focus-mode"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const goalRow = document.getElementById('focus-goal-row');
+        goalRow.style.display = radio.value === 'goal' ? 'flex' : 'none';
+      });
+    });
+    function adjustGoal(delta) {
+      const inp = document.getElementById('focus-goal-input');
+      inp.value = Math.max(1, Math.min(20, parseInt(inp.value || 3) + delta));
+    }
+    // Abre rank e mostra XP atual
+    const _origOpenRankModal = openRankModal;
+    function openRankModal() {
+      _origOpenRankModal();
+      const el = document.getElementById('rank-current-val');
+      if (el) el.textContent = XPState.totalXP;
+    }
+  </script>
+</body>
+</html>
